@@ -1,0 +1,100 @@
+---
+const showcases = [
+  {
+    title: 'Powerful Request Builder',
+    description: 'Craft requests with 6 body types (JSON, Form Data, URL Encoded, XML, Raw, None), query parameters, custom headers, and multiple auth methods. Color-coded HTTP methods make it easy to scan.',
+    details: ['JSON, XML, Form Data, URL Encoded, Raw Text', 'Query params and headers with toggle controls', 'Per-request timeout and retry settings'],
+  },
+  {
+    title: 'Rich Response Viewer',
+    description: 'Inspect responses with syntax-highlighted JSON and XML, an interactive tree view with expand/collapse, in-body search with Ctrl+F, and a clear status bar showing code, time, and size.',
+    details: ['JSON tree view with expand all / collapse all', 'Ctrl+F search with match navigation', 'Status code, duration, and response size at a glance'],
+  },
+  {
+    title: 'AI-Native with MCP',
+    description: 'Reqline exposes an MCP server over Streamable HTTP, letting AI agents manage collections, execute requests, and work with environments. Connect Claude Desktop, Cursor, or Warp in seconds.',
+    details: ['20+ MCP tools for full API workflow automation', 'Streamable HTTP transport at localhost:3218', 'Headless stdio mode for CI pipelines'],
+  },
+];
+
+const methods = [
+  { m: 'GET', cls: 'bg-emerald-500/20 text-emerald-400' },
+  { m: 'POST', cls: 'bg-amber-500/20 text-amber-400' },
+  { m: 'PUT', cls: 'bg-blue-500/20 text-blue-400' },
+  { m: 'PATCH', cls: 'bg-orange-500/20 text-orange-400' },
+  { m: 'DELETE', cls: 'bg-red-500/20 text-red-400' },
+];
+
+const bodyTypes = ['JSON', 'Form Data', 'URL Encoded', 'XML', 'Raw Text'];
+
+const lbrace = '{';
+const rbrace = '}';
+---
+
+<section class="py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+    {showcases.map((item, i) => (
+      <div class:list={["flex flex-col gap-8", i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"]}>
+        <div class="flex-1 flex flex-col justify-center">
+          <h3 class="text-2xl sm:text-3xl font-bold text-slate-100 mb-4">{item.title}</h3>
+          <p class="text-slate-400 leading-relaxed mb-6">{item.description}</p>
+          <ul class="space-y-3">
+            {item.details.map((detail) => (
+              <li class="flex items-start gap-3 text-sm text-slate-300">
+                <svg class="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {detail}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="flex-1">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 h-full flex items-center justify-center min-h-[200px]">
+            {i === 0 && (
+              <div class="w-full space-y-3">
+                <div class="flex gap-2 flex-wrap">
+                  {methods.map(({ m, cls }) => (
+                    <span class={`px-2 py-1 text-xs font-mono font-semibold rounded ${cls}`}>{m}</span>
+                  ))}
+                </div>
+                <div class="space-y-2 mt-4">
+                  {bodyTypes.map((type) => (
+                    <div class="flex items-center gap-2">
+                      <div class="w-2 h-2 bg-sky-400 rounded-full"></div>
+                      <span class="text-xs text-slate-400 font-mono">{type}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {i === 1 && (
+              <div class="w-full font-mono text-xs text-slate-400 space-y-1">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-emerald-400 font-sans text-sm font-semibold">200 OK</span>
+                  <span class="text-slate-600">|</span>
+                  <span class="text-slate-500">124ms</span>
+                  <span class="text-slate-600">|</span>
+                  <span class="text-slate-500">2.4 KB</span>
+                </div>
+                <div class="text-slate-600">{lbrace}</div>
+                <div class="pl-4"><span class="text-sky-300">"status"</span>: <span class="text-emerald-400">"success"</span>,</div>
+                <div class="pl-4"><span class="text-sky-300">"count"</span>: <span class="text-amber-400">42</span>,</div>
+                <div class="pl-4"><span class="text-sky-300">"data"</span>: [</div>
+                <div class="pl-8">{lbrace} ... {rbrace}</div>
+                <div class="pl-4">]</div>
+                <div class="text-slate-600">{rbrace}</div>
+              </div>
+            )}
+            {i === 2 && (
+              <div class="w-full space-y-3 text-xs">
+                <div class="text-slate-500 font-mono mb-2"># MCP config (Claude Desktop / Cursor / Warp)</div>
+                <pre class="text-slate-400 font-mono leading-relaxed">{`${lbrace}\n  "mcpServers": ${lbrace}\n    "reqline": ${lbrace}\n      "url": `}<span class="text-emerald-400">"http://127.0.0.1:3218/mcp"</span>{`\n    ${rbrace}\n  ${rbrace}\n${rbrace}`}</pre>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

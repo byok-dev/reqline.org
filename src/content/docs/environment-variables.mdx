@@ -1,0 +1,58 @@
+---
+title: Environment Variables
+description: Use environment variables to manage different configurations across your requests.
+order: 6
+group: Core Features
+---
+
+## Overview
+
+Environments let you define sets of key-value variables (like `base_url`, `api_token`, `user_id`) and switch between them. Variables are substituted into your requests using `{{variable_name}}` syntax.
+
+## Creating an environment
+
+1. Click the **environment selector** in the header bar (shows "No Environment" by default)
+2. Click **Manage Environments**
+3. Click **Create Environment**
+4. Give it a name (e.g., "Development", "Staging", "Production")
+5. Add variables as key-value pairs
+
+Each variable has:
+- **Key** — the variable name (used as `{{key}}`)
+- **Value** — the substituted value
+- **Enabled** — toggle to include/exclude without deleting
+
+## Using variables
+
+Use `{{variable_name}}` anywhere in your requests:
+
+- **URL** — `{{base_url}}/api/users`
+- **Query parameters** — Key: `token`, Value: `{{api_token}}`
+- **Headers** — Value: `Bearer {{access_token}}`
+- **Request body** — `{"user_id": "{{user_id}}"}`
+- **Auth fields** — Bearer token: `{{jwt_token}}`
+
+Variables are resolved just before the request is sent. Unresolved variables (no matching key in the active environment) are left as-is.
+
+## Switching environments
+
+Click the environment selector in the header and choose an environment to activate. Only one environment can be active at a time.
+
+When you switch environments, all `{{variable}}` references in your requests resolve to the new environment's values. This makes it easy to test the same requests against different servers or with different credentials.
+
+## Managing environments
+
+From the Manage Environments modal you can:
+
+- **Edit** variables in any environment
+- **Delete** an environment
+- **Activate/deactivate** an environment
+- **Toggle** individual variables on/off
+
+## Example setup
+
+| Variable | Development | Production |
+|----------|------------|------------|
+| `base_url` | `http://localhost:3000` | `https://api.example.com` |
+| `api_token` | `dev-token-123` | `prod-token-456` |
+| `timeout` | `5000` | `30000` |

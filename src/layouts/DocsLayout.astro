@@ -1,0 +1,82 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import DocsSidebar from '../components/DocsSidebar.astro';
+import { docsNav } from '../data/navigation';
+
+interface Props {
+  title: string;
+  description: string;
+  headings: Array<{ depth: number; slug: string; text: string }>;
+}
+
+const { title, description, headings } = Astro.props;
+
+// Find prev/next pages
+const allPages = docsNav.flatMap((g) => g.items);
+const currentSlug = Astro.url.pathname.replace(/^\/docs\/?/, '').replace(/\/$/, '');
+const currentIndex = allPages.findIndex((p) => p.slug === currentSlug);
+const prevPage = currentIndex > 0 ? allPages[currentIndex - 1] : null;
+const nextPage = currentIndex < allPages.length - 1 ? allPages[currentIndex + 1] : null;
+
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+<BaseLayout title={`${title} - Reqline Docs`} description={description}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex gap-12">
+      <DocsSidebar />
+
+      <!-- Main content -->
+      <article class="flex-1 min-w-0 max-w-2xl">
+        <header class="mb-10 pb-6 border-b border-slate-800/60">
+          <h1 class="text-3xl sm:text-4xl font-bold text-slate-100 tracking-tight">{title}</h1>
+          <p class="mt-3 text-lg text-slate-400 leading-relaxed">{description}</p>
+        </header>
+
+        <div class="prose prose-invert max-w-none">
+          <slot />
+        </div>
+
+        <!-- Prev/Next navigation -->
+        <nav class="mt-16 pt-8 border-t border-slate-800/60 flex justify-between gap-4">
+          {prevPage ? (
+            <a href={`/docs/${prevPage.slug}`} class="group flex flex-col px-4 py-3 rounded-lg border border-slate-800/60 hover:border-slate-700 transition-colors flex-1">
+              <span class="text-[11px] text-slate-500 uppercase tracking-wider mb-1">Previous</span>
+              <span class="text-sm font-medium text-slate-300 group-hover:text-sky-400 transition-colors">&larr; {prevPage.title}</span>
+            </a>
+          ) : <div class="flex-1" />}
+          {nextPage ? (
+            <a href={`/docs/${nextPage.slug}`} class="group flex flex-col text-right px-4 py-3 rounded-lg border border-slate-800/60 hover:border-slate-700 transition-colors flex-1">
+              <span class="text-[11px] text-slate-500 uppercase tracking-wider mb-1">Next</span>
+              <span class="text-sm font-medium text-slate-300 group-hover:text-sky-400 transition-colors">{nextPage.title} &rarr;</span>
+            </a>
+          ) : <div class="flex-1" />}
+        </nav>
+      </article>
+
+      <!-- Table of Contents -->
+      {tocHeadings.length > 0 && (
+        <aside class="w-52 flex-shrink-0 hidden xl:block">
+          <nav class="sticky top-20 pl-4 border-l border-slate-800/60">
+            <h4 class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-4">On this page</h4>
+            <ul class="space-y-2">
+              {tocHeadings.map((heading) => (
+                <li>
+                  <a
+                    href={`#${heading.slug}`}
+                    class:list={[
+                      "block text-[13px] leading-snug transition-colors hover:text-slate-200",
+                      heading.depth === 3 ? "pl-3 text-slate-500" : "text-slate-400",
+                    ]}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      )}
+    </div>
+  </div>
+</BaseLayout>

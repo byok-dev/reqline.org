@@ -1,0 +1,55 @@
+---
+title: Authentication
+description: Configure Bearer Token, Basic Auth, or API Key authentication for your requests.
+order: 5
+group: Core Features
+---
+
+## Auth types
+
+Click the **Auth** tab in the request panel to configure authentication. Reqline supports 4 options:
+
+### No Auth
+
+No authentication headers are added to the request. This is the default.
+
+### Bearer Token
+
+Enter a token and Reqline adds the header:
+
+```
+Authorization: Bearer <your-token>
+```
+
+The token field has a show/hide toggle for security. You can use environment variables like `{{API_TOKEN}}` in the token field.
+
+### Basic Auth
+
+Enter a **username** and **password**. Reqline Base64-encodes them and adds:
+
+```
+Authorization: Basic <base64(username:password)>
+```
+
+Both fields support environment variables.
+
+### API Key
+
+Enter a **key name** and **value**, then choose where to send it:
+
+- **Header** — Added as a custom request header (e.g., `X-API-Key: your-key`)
+- **Query parameter** — Appended to the URL (e.g., `?api_key=your-key`)
+
+## Auth and environment variables
+
+All auth fields support `{{variable}}` substitution. This is useful for:
+
+- Storing tokens per environment (development, staging, production)
+- Sharing collection templates without exposing secrets
+- Rotating credentials without editing every request
+
+See [Environment Variables](/docs/environment-variables) for setup instructions.
+
+## Auth precedence
+
+Auth headers set in the Auth tab take precedence. If you also set an `Authorization` header manually in the Headers tab, both will be sent — the Auth tab header is added first.

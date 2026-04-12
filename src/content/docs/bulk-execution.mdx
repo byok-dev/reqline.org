@@ -1,0 +1,41 @@
+---
+title: Bulk Execution
+description: Run all requests in a collection sequentially and review results.
+order: 11
+group: Import & Export
+---
+
+## Overview
+
+Bulk execution lets you run every request in a collection one after another, with a detailed results view showing the status of each request.
+
+## Running a collection
+
+1. Right-click a collection in the sidebar
+2. Select **Run Collection**
+3. The bulk run modal opens and begins executing requests sequentially
+
+## Results view
+
+Each request in the run shows:
+
+- **Status indicator** — Pending (gray), Running (spinner), Success (green checkmark), Error (red X)
+- **Request name** and HTTP method
+- **Response status code** (e.g., `200 OK`, `404 Not Found`)
+- **Duration** in milliseconds
+
+Click on any result to expand and see more details.
+
+## Execution behavior
+
+- Requests run **sequentially** in their collection order
+- The **active environment** is used for variable substitution
+- Each request is recorded in your **history** as if sent individually
+- If a request fails (network error, timeout), it's marked as an error and the next request proceeds
+- The **retry on failure** setting is respected per request
+
+## Use cases
+
+- **Smoke testing** — Verify all endpoints in an API are responding
+- **Data seeding** — Run a series of POST requests to set up test data
+- **Regression checks** — Re-run a saved collection after code changes

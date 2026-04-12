@@ -1,0 +1,60 @@
+---
+title: Import & Export
+description: Import cURL commands and exchange collections as JSON files.
+order: 10
+group: Import & Export
+---
+
+## cURL import
+
+Paste any `curl` command directly into the URL bar. Reqline parses:
+
+- **URL** and query parameters
+- **Method** (`-X POST`, `-X PUT`, etc.)
+- **Headers** (`-H "Content-Type: application/json"`)
+- **Body** (`-d`, `--data`, `--data-raw`, `--data-binary`)
+- **Form data** (`-F "file=@path"`)
+- **Basic auth** (`-u username:password`, `--user`)
+- **Cookies** (`-b`, `--cookie`)
+
+The parser handles quoted strings, escaped characters, multiline commands (with `\`), and ANSI escape codes from terminal copy-paste.
+
+### Example
+
+```bash
+curl -X POST https://api.example.com/users \
+  -H "Authorization: Bearer token123" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Alice", "email": "alice@example.com"}'
+```
+
+Paste this into the URL bar and Reqline will fill in:
+- Method: POST
+- URL: `https://api.example.com/users`
+- Headers: Authorization and Content-Type
+- Body: JSON with the user data
+
+## Export a collection
+
+1. Right-click a collection in the sidebar
+2. Select **Export Collection**
+3. Choose a location to save the JSON file
+
+The exported file includes the collection metadata and all its requests in a versioned format:
+
+```json
+{
+  "version": 1,
+  "exportedAt": "2025-01-15T10:30:00.000Z",
+  "collection": { "name": "My API", "description": "..." },
+  "requests": [...]
+}
+```
+
+## Import a collection
+
+1. Click the **Import** button at the bottom of the sidebar
+2. Select a previously exported JSON file
+3. The collection and all its requests are added to your workspace
+
+Import validates the file structure before adding. Invalid files are rejected with an error message.

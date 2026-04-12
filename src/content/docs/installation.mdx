@@ -1,0 +1,54 @@
+---
+title: Installation
+description: Download and install Reqline on macOS, Windows, or Linux.
+order: 1
+group: Getting Started
+---
+
+## Download
+
+Reqline is available as a desktop app for all major platforms. Download the latest release from GitHub:
+
+- **macOS** — `.dmg` (Universal binary, works on both Intel and Apple Silicon)
+- **Windows** — `.exe` (NSIS installer, Windows 10 or later)
+- **Linux** — `.AppImage` (works on all major distributions)
+
+[Download the latest release](https://github.com/abhi16z/ApiUnravel/releases)
+
+## Install
+
+### macOS
+
+1. Open the downloaded `.dmg` file
+2. Drag **Reqline** into your Applications folder
+3. Open Reqline from Applications (you may need to right-click and select "Open" the first time)
+
+### Windows
+
+1. Run the downloaded `.exe` installer
+2. Follow the installation wizard
+3. Launch Reqline from the Start menu or desktop shortcut
+
+### Linux
+
+1. Make the AppImage executable: `chmod +x Reqline-*.AppImage`
+2. Run it: `./Reqline-*.AppImage`
+
+## First launch
+
+When you first open Reqline, you'll see:
+
+- A clean workspace with a single request tab
+- The sidebar on the left for collections and history
+- A seeded **Local API Docs** collection with example requests for the built-in local API
+
+The app stores data at `~/.config/reqline/reqline-data.json` (or the platform-equivalent user data directory). No account or signup is required.
+
+## What starts automatically
+
+When the desktop app launches, two local servers start in the background:
+
+- **Local API Server** at `http://127.0.0.1:3217` — CRUD endpoints for collections, requests, and environments
+- **MCP Server** at `http://127.0.0.1:3218/mcp` — MCP over Streamable HTTP for AI agent integration
+
+Both ports are configurable via environment variables. See [Local API Server](/docs/local-api-server) and [MCP Server](/docs/mcp-server) for details.

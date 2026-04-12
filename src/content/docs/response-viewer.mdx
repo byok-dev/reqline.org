@@ -1,0 +1,68 @@
+---
+title: Response Viewer
+description: Inspect response bodies, headers, status codes, and timing information.
+order: 8
+group: Core Features
+---
+
+## Overview
+
+After sending a request, the response panel shows the full response with syntax highlighting, interactive tree views, and search.
+
+## Status bar
+
+The top of the response panel shows:
+
+- **Status code** — Color-coded: green (2xx), amber (3xx), orange (4xx), red (5xx)
+- **Duration** — Round-trip time in milliseconds
+- **Response size** — In bytes, KB, or MB
+
+## Body tab
+
+The response body viewer has three modes:
+
+### Pretty mode
+
+Formatted and syntax-highlighted view for JSON and XML responses. JSON keys, strings, numbers, booleans, and null values each get distinct colors.
+
+### Raw mode
+
+The unformatted response text, exactly as received.
+
+### Tree view (JSON only)
+
+An interactive, expandable tree for JSON responses:
+
+- Click the triangle icon to expand or collapse nodes
+- **Expand All** / **Collapse All** buttons at the top
+- Values are color-coded:
+  - Strings: green
+  - Numbers: amber
+  - Booleans: purple
+  - Null: gray
+- Object and array sizes shown inline
+
+### Search
+
+Press `Ctrl+F` (`Cmd+F` on macOS) while the response panel is focused to search within the response body:
+
+- Match counter shows "1 / 5" format
+- `Enter` to jump to the next match
+- `Shift+Enter` for the previous match
+- `Esc` to close search
+- Current match is highlighted in blue
+
+### Copy
+
+Click the **Copy** button to copy the entire response body to your clipboard.
+
+## Headers tab
+
+Shows all response headers in a two-column layout. The tab label shows the header count (e.g., "Headers (12)").
+
+## Error states
+
+If a request fails (network error, timeout, etc.), the response panel shows:
+
+- An error icon and message describing the failure
+- No body or headers tabs (since no response was received)

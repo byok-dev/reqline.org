@@ -1,0 +1,50 @@
+---
+title: Request Configuration
+description: Configure HTTP methods, query parameters, and headers for your requests.
+order: 3
+group: Core Features
+---
+
+## HTTP methods
+
+Reqline supports all 9 standard HTTP methods, each with a distinct color for quick identification:
+
+| Method | Color | Typical use |
+|--------|-------|-------------|
+| **GET** | Green | Retrieve data |
+| **POST** | Amber | Create a resource |
+| **PUT** | Blue | Replace a resource |
+| **PATCH** | Orange | Partially update a resource |
+| **DELETE** | Red | Remove a resource |
+| **HEAD** | Cyan | Same as GET but without the response body |
+| **OPTIONS** | Purple | Discover allowed methods |
+| **CONNECT** | Pink | Establish a tunnel |
+| **TRACE** | Teal | Loop-back test |
+
+Select a method from the dropdown to the left of the URL bar.
+
+## Query parameters
+
+Click the **Params** tab below the URL bar to add query parameters as key-value pairs.
+
+- Each parameter has a **key**, **value**, and optional **description**
+- Toggle the checkbox to enable or disable individual parameters without deleting them
+- Parameters are automatically appended to the URL as `?key=value&key2=value2`
+- You can also type parameters directly in the URL — they'll sync to the Params tab
+
+## Headers
+
+Click the **Headers** tab to add custom request headers.
+
+- Same key-value interface as parameters
+- Toggle individual headers on/off
+- Some headers are set automatically (e.g., `Content-Type` based on body type, `Authorization` based on auth config)
+
+## Settings
+
+Click the **Settings** tab for per-request options:
+
+- **Timeout** — Maximum time in milliseconds to wait for a response (0 = no timeout)
+- **Retry on failure** — Automatically retry the request if it fails
+
+These settings are saved per request when you save to a collection.

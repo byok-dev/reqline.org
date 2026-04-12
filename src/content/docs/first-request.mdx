@@ -1,0 +1,61 @@
+---
+title: Your First Request
+description: Send your first HTTP request with Reqline in under a minute.
+order: 2
+group: Getting Started
+---
+
+## Send a GET request
+
+1. **Enter a URL** — Type or paste a URL into the URL bar at the top, for example: `https://jsonplaceholder.typicode.com/posts/1`
+2. **Select the method** — Click the method dropdown on the left and choose **GET** (this is the default)
+3. **Hit Send** — Click the **Send** button or press `Ctrl+Enter` (`Cmd+Enter` on macOS)
+
+The response appears in the right panel with:
+
+- **Status code** (e.g., `200 OK`) color-coded green for success
+- **Duration** in milliseconds
+- **Response size** in bytes/KB
+- **Response body** with syntax highlighting
+- **Response headers** in a separate tab
+
+## Paste a cURL command
+
+You can paste any `curl` command directly into the URL bar. Reqline will automatically parse:
+
+- The URL and HTTP method
+- Headers (`-H`)
+- Request body (`-d`, `--data`)
+- Authentication (`-u` for Basic Auth)
+- Form data (`-F`)
+
+For example, paste this:
+
+```bash
+curl -X POST https://jsonplaceholder.typicode.com/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Hello", "body": "World", "userId": 1}'
+```
+
+Reqline fills in the method, URL, headers, and body automatically.
+
+## Save your request
+
+Press `Ctrl+S` (`Cmd+S` on macOS) to save the current request. You can:
+
+- Give it a name (auto-fills from the URL if left blank)
+- Choose a collection to save it in, or leave it uncollected
+
+Saved requests appear in the sidebar and persist across sessions.
+
+## Open multiple tabs
+
+- Press `Ctrl+T` (`Cmd+T`) to open a new tab
+- Double-click a tab to rename it
+- Right-click a tab for options: pin, close, close others
+
+## Next steps
+
+- [Request Configuration](/docs/request-configuration) — Explore all HTTP methods and request options
+- [Authentication](/docs/authentication) — Set up Bearer Token, Basic Auth, or API Key
+- [Environment Variables](/docs/environment-variables) — Use variables across your requests

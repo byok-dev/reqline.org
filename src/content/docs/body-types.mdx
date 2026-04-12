@@ -1,0 +1,65 @@
+---
+title: Request Body
+description: Send JSON, form data, XML, and other body types with your requests.
+order: 4
+group: Core Features
+---
+
+## Body types
+
+Click the **Body** tab in the request panel to choose a body type. Reqline supports 6 options:
+
+### None
+
+No request body is sent. This is the default for GET, HEAD, DELETE, and OPTIONS requests.
+
+### JSON
+
+Write or paste JSON in the editor. Reqline automatically:
+
+- Sets `Content-Type: application/json`
+- Validates your JSON and shows parsing errors
+- Supports pretty-printing
+
+```json
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "role": "admin"
+}
+```
+
+### Form Data
+
+Send `multipart/form-data` using key-value pairs. Useful for:
+
+- File uploads
+- Form submissions
+- APIs that expect multipart encoding
+
+Each field has a key, value, and enable/disable toggle.
+
+### URL Encoded
+
+Send `application/x-www-form-urlencoded` data as key-value pairs. This is the format used by HTML forms by default.
+
+The data is encoded as `key1=value1&key2=value2` in the request body.
+
+### XML
+
+Write or paste XML content. Reqline sets `Content-Type: application/xml`.
+
+```xml
+<user>
+  <name>Alice</name>
+  <email>alice@example.com</email>
+</user>
+```
+
+### Raw Text
+
+Send any raw text with `Content-Type: text/plain`. Use this for custom content types or plain text APIs.
+
+## Environment variables in bodies
+
+You can use `{{variable}}` syntax in any body type. Variables are resolved from the active environment before the request is sent. See [Environment Variables](/docs/environment-variables) for details.

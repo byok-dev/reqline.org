@@ -1,0 +1,78 @@
+---
+title: Headless Mode
+description: Run the Reqline MCP server without the desktop UI for CI and automation.
+order: 14
+group: Integrations
+---
+
+## Overview
+
+Reqline can run in **headless mode** — no desktop window, just the MCP server communicating over stdio. This is useful for CI pipelines, automated testing, and environments without a display.
+
+## Starting headless mode
+
+From the Reqline project directory:
+
+```bash
+pnpm start:mcp
+```
+
+This builds the app and launches Electron with the `--mcp-stdio` flag. The MCP server communicates over standard input/output using the MCP stdio transport.
+
+## Use cases
+
+### CI/CD integration
+
+Use headless mode in CI pipelines to:
+
+- Execute saved API requests as part of your test suite
+- Seed test data via collections
+- Verify API responses in automated workflows
+
+### AI agent integration via stdio
+
+Some AI clients support MCP over stdio. Configure them to launch Reqline:
+
+```json
+{
+  "mcpServers": {
+    "reqline": {
+      "command": "pnpm",
+      "args": ["start:mcp"],
+      "cwd": "/path/to/reqline"
+    }
+  }
+}
+```
+
+The AI client spawns the process and communicates via stdin/stdout.
+
+## Smoke testing
+
+Run a full smoke test against the running desktop app:
+
+```bash
+pnpm smoke:mcp:real
+```
+
+This spawns the headless MCP server and verifies it can:
+
+1. Discover the live desktop app's local API
+2. Create and manage collections, requests, and environments
+3. Execute requests against the desktop app's endpoints
+4. Verify history tracking
+5. Clean up all test data
+
+## Data storage
+
+Headless mode uses the same data store as the desktop app (`reqline-data.json` in the user data directory). Changes made in headless mode are visible when you next open the desktop app, and vice versa.
+
+## Environment variables
+
+The same configuration variables apply:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `REQLINE_MCP_PORT` | `3218` | MCP HTTP port (not used in stdio mode) |
+| `REQLINE_LOCAL_API_PORT` | `3217` | Local API port |
+| `REQLINE_LOCAL_API_TOKEN` | *(none)* | Optional auth token |

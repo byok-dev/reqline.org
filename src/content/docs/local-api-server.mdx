@@ -1,0 +1,119 @@
+---
+title: Local API Server
+description: Use the local REST API to programmatically manage Reqline data.
+order: 13
+group: Integrations
+---
+
+## Overview
+
+When the Reqline desktop app is running, a local HTTP API is available at:
+
+```
+http://127.0.0.1:3217/api/v1
+```
+
+This API provides full CRUD access to your collections, requests, and environments. It's useful for scripting, automation, and integration with other tools.
+
+## Authentication
+
+By default, no authentication is required. To enable token-based auth, set the `REQLINE_LOCAL_API_TOKEN` environment variable before launching Reqline.
+
+When a token is set, include it in requests as either:
+
+- `Authorization: Bearer <token>` header
+- `X-API-Key: <token>` header
+
+## Endpoints
+
+### Health
+
+```
+GET /api/v1/health
+```
+
+Returns `{ "data": { "ok": true, "mode": "electron" } }`.
+
+### Diagnostics
+
+```
+GET /api/v1/diagnostics
+```
+
+Returns server info including process ID, host, port, and store diagnostics.
+
+### Collections
+
+```
+GET    /api/v1/collections              # List all collections
+POST   /api/v1/collections              # Create a collection
+GET    /api/v1/collections/:id          # Get a collection
+PUT    /api/v1/collections/:id          # Update a collection
+PATCH  /api/v1/collections/:id          # Partial update
+DELETE /api/v1/collections/:id          # Delete collection + requests
+GET    /api/v1/collections/:id/requests # List requests in a collection
+```
+
+### Requests
+
+```
+GET    /api/v1/requests                 # List all requests
+GET    /api/v1/requests?collectionId=x  # Filter by collection
+POST   /api/v1/requests                 # Create a request
+GET    /api/v1/requests/:id             # Get a request
+PUT    /api/v1/requests/:id             # Update a request
+PATCH  /api/v1/requests/:id             # Partial update
+DELETE /api/v1/requests/:id             # Delete a request
+```
+
+### Environments
+
+```
+GET    /api/v1/environments             # List all environments
+POST   /api/v1/environments             # Create an environment
+GET    /api/v1/environments/:id         # Get an environment
+PUT    /api/v1/environments/:id         # Update an environment
+PATCH  /api/v1/environments/:id         # Partial update
+DELETE /api/v1/environments/:id         # Delete an environment
+```
+
+### Active environment
+
+```
+GET    /api/v1/environments/active      # Get active environment
+PUT    /api/v1/environments/active      # Set active (body: { "id": "..." })
+DELETE /api/v1/environments/active      # Clear active environment
+```
+
+## Response format
+
+All responses follow the format:
+
+```json
+{
+  "data": { ... }
+}
+```
+
+Errors return:
+
+```json
+{
+  "error": {
+    "code": "not_found",
+    "message": "Collection not found.",
+    "details": null
+  }
+}
+```
+
+## Configuration
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `REQLINE_LOCAL_API_PORT` | `3217` | Port for the local API server |
+| `REQLINE_LOCAL_API_TOKEN` | *(none)* | Optional auth token |
+
+## Local API Docs collection
+
+On first launch, Reqline seeds a **Local API Docs** collection inside the app with example requests for each endpoint. You can use these as a starting point or delete them if not needed.

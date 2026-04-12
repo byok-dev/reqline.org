@@ -1,0 +1,122 @@
+---
+title: MCP Server
+description: Connect AI agents to Reqline via the built-in MCP server.
+order: 12
+group: Integrations
+---
+
+## Overview
+
+Reqline includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that starts automatically with the desktop app. AI agents can use it to manage collections, execute requests, and work with environments programmatically.
+
+The MCP server is available over **Streamable HTTP** at:
+
+```
+http://127.0.0.1:3218/mcp
+```
+
+## Connecting AI clients
+
+### Claude Desktop / Cursor
+
+Add to your MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "reqline": {
+      "url": "http://127.0.0.1:3218/mcp"
+    }
+  }
+}
+```
+
+### Warp
+
+Add to `~/.warp/.mcp.json` (global) or `.warp/.mcp.json` (per-project):
+
+```json
+{
+  "mcpServers": {
+    "reqline": {
+      "url": "http://127.0.0.1:3218/mcp"
+    }
+  }
+}
+```
+
+Alternatively, use stdio mode (launches Reqline headlessly):
+
+```json
+{
+  "mcpServers": {
+    "reqline": {
+      "command": "pnpm",
+      "args": ["start:mcp"]
+    }
+  }
+}
+```
+
+## Available tools
+
+The MCP server exposes 20 tools:
+
+### Collections
+
+| Tool | Description |
+|------|-------------|
+| `list_collections` | List all saved collections |
+| `get_collection` | Fetch one collection by ID |
+| `create_collection` | Create a new collection |
+| `update_collection` | Update an existing collection |
+| `delete_collection` | Delete a collection and its requests |
+
+### Requests
+
+| Tool | Description |
+|------|-------------|
+| `list_requests` | List saved requests (optionally by collection) |
+| `get_request` | Fetch one request by ID |
+| `create_request` | Create a new saved request |
+| `update_request` | Update an existing request |
+| `delete_request` | Delete a saved request |
+
+### Environments
+
+| Tool | Description |
+|------|-------------|
+| `list_environments` | List all environments |
+| `get_environment` | Fetch one environment by ID |
+| `create_environment` | Create a new environment |
+| `update_environment` | Update an existing environment |
+| `delete_environment` | Delete an environment |
+| `get_active_environment` | Get the currently active environment |
+| `set_active_environment` | Activate an environment by ID |
+| `clear_active_environment` | Deactivate the current environment |
+
+### Execution
+
+| Tool | Description |
+|------|-------------|
+| `execute_saved_request` | Execute a saved request by ID using the active environment |
+| `execute_request` | Execute an ad-hoc request payload |
+
+Both execution tools record the result in history, just like sending from the UI.
+
+## Resources
+
+The MCP server also exposes two read-only resources:
+
+- `reqline://collections` — Collection metadata (names, IDs, timestamps)
+- `reqline://requests` — Request metadata (names, methods, URLs, IDs) without sensitive data
+
+## Configuration
+
+| Environment variable | Default | Description |
+|---------------------|---------|-------------|
+| `REQLINE_MCP_PORT` | `3218` | MCP HTTP server port |
+| `REQLINE_LOCAL_API_PORT` | `3217` | Local API server port |
+| `REQLINE_LOCAL_API_TOKEN` | *(none)* | Optional auth token for the local API |
+
+If the configured port is occupied, the server automatically falls back to a random available port.

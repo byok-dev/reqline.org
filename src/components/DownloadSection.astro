@@ -1,4 +1,6 @@
 ---
+import { RELEASE_URL } from '../data/urls';
+
 const platforms = [
   {
     name: "macOS",
@@ -40,10 +42,10 @@ const platforms = [
       {
         platforms.map((platform) => (
           <a
-            href="https://github.com/byok-dev/reqline.org/releases"
+            href={RELEASE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            
+
             class={`group flex flex-col items-center bg-slate-900/50 border border-slate-800/60 hover:border-sky-500/40 rounded-xl p-8 transition-all hover:bg-slate-900/80 ${platform.name !== "macOS" ? "pointer-events-none opacity-50" : ""}`}
           >
             <div class="w-12 h-12 bg-slate-800 group-hover:bg-sky-500/10 rounded-xl flex items-center justify-center mb-4 transition-colors">

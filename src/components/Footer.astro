@@ -1,4 +1,6 @@
 ---
+import { GITHUB_REPO_URL, RELEASE_URL, ISSUES_URL } from '../data/urls';
+
 const year = new Date().getFullYear();
 ---
 
@@ -31,7 +33,7 @@ const year = new Date().getFullYear();
           </li>
           <li>
             <a
-              href="https://github.com/byok-dev/reqline.org/releases"
+              href={RELEASE_URL}
               target="_blank"
               rel="noopener noreferrer"
               class="text-sm text-slate-500 hover:text-slate-300 transition-colors"
@@ -81,7 +83,7 @@ const year = new Date().getFullYear();
         <ul class="space-y-2">
           <li>
             <a
-              href="https://github.com/byok-dev/reqline.org"
+              href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               class="text-sm text-slate-500 hover:text-slate-300 transition-colors"
@@ -90,7 +92,7 @@ const year = new Date().getFullYear();
           </li>
           <li>
             <a
-              href="https://github.com/byok-dev/reqline.org/issues"
+              href={ISSUES_URL}
               target="_blank"
               rel="noopener noreferrer"
               class="text-sm text-slate-500 hover:text-slate-300 transition-colors"
